@@ -1,35 +1,46 @@
-# Data
-data/
-*.csv
-
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
-*.pyo
-*.egg-info/
-dist/
-build/
-.eggs/
+*.py[cod]
+*$py.class
 
-# Virtual environment
+# Virtual environments
 venv/
-env/
 .venv/
+env/
+ENV/
 
-# IDE
+# System & OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
+*.user
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Jupyter
+# Jupyter Notebooks
 .ipynb_checkpoints/
 
-# Models
-*.pkl
-*.pt
-*.pth
+# Logs & Temporary Files
+*.log
+*.tmp
+temp/
+
+# Exclude raw data logs but KEEP engineered_dataset.csv for production deployment
+data/raw/*.csv
+!data/processed/engineered_dataset.csv
+!data/processed/analyst_actions.csv
+
+# Ensure README image assets are ALWAYS tracked
+!image.png
+!image1.png
+!image2.png
+!image3.png
+!*.png
+!*.jpg
+!*.jpeg
+!*.gif
+!*.svg
