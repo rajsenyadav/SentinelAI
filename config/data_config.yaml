@@ -1,0 +1,51 @@
+# SentinelAI — Data Generation Configuration
+
+seed: 42
+
+# --- Dataset Size ---
+dataset:
+  total_events: 100000
+  time_span_days: 90
+  start_date: "2026-01-01"
+
+# --- Entity Population ---
+entities:
+  user_employee: 60
+  user_developer: 35
+  user_hr: 15
+  user_finance: 20
+  user_admin: 20
+  service_account: 30
+  edge_device: 20
+
+# --- Attack Distribution (percentage of total events) ---
+attacks:
+  anomaly_rate: 0.03
+  distribution:
+    brute_force: 0.167
+    impossible_travel: 0.100
+    credential_stuffing: 0.133
+    lateral_movement: 0.167
+    device_spoofing: 0.100
+    low_slow_exfiltration: 0.167
+    insider_drift: 0.167
+
+# --- Cold Start & Concept Drift ---
+cold_start:
+  new_entities_in_test: 12
+
+concept_drift:
+  drifting_entities: 8
+
+# --- Data Splits (temporal) ---
+splits:
+  train_ratio: 0.60
+  val_ratio: 0.20
+  test_ratio: 0.20
+
+# --- Output ---
+output:
+  directory: "data/raw"
+  events_file: "events.csv"
+  labels_file: "labels.csv"
+  profiles_file: "entity_profiles.csv"
