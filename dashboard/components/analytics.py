@@ -1,11 +1,10 @@
 """
 SentinelAI Dashboard — Attack Analytics Component
 
-Displays interactive Plotly visual analytics charts:
-- Attack Category Distribution
-- Risk Level Distribution
-- Department-wise Threat Breakdown
-- Hourly Incident Trend
+Displays interactive Plotly visual analytics charts with premium white theme:
+- Attack Category Distribution (Donut Chart)
+- Department Risk Exposure (Bar Chart)
+- Hourly Incident Trend (Spline Chart)
 """
 
 import streamlit as st
@@ -13,11 +12,13 @@ import pandas as pd
 import plotly.express as px
 
 
-def render_analytics(df: pd.DataFrame, theme_mode: str = "Dark Mode"):
-    """Render Plotly threat analytics charts."""
-    st.subheader("Cyber Attack Analytics & Trend Intelligence")
+# Premium white-only color palette — no blue or dark shades
+CHART_COLORS = ["#c4392a", "#e06b5e", "#d97706", "#b8860b", "#2e7d4f", "#8b6f47", "#a0522d", "#cc7a6f"]
 
-    plotly_template = "plotly_dark" if theme_mode == "Dark Mode" else "plotly_white"
+
+def render_analytics(df: pd.DataFrame, theme_mode: str = "Light Mode"):
+    """Render Plotly threat analytics charts with white-only premium theme."""
+    st.subheader("Cyber Attack Analytics & Trend Intelligence")
 
     df_anom = df[df["label"] == "anomaly"].copy()
     if len(df_anom) == 0:
@@ -37,10 +38,22 @@ def render_analytics(df: pd.DataFrame, theme_mode: str = "Dark Mode"):
             names="Attack Type",
             values="Count",
             title="Threat Vector Distribution",
-            color_discrete_sequence=["#ef4444", "#f97316", "#f59e0b", "#3b82f6", "#8b5cf6", "#06b6d4"],
-            hole=0.4,
+            color_discrete_sequence=CHART_COLORS,
+            hole=0.45,
         )
-        fig1.update_layout(template=plotly_template, paper_bgcolor="rgba(0,0,0,0)")
+        fig1.update_layout(
+            template="plotly_white",
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Inter, sans-serif", color="#2c2825"),
+            title_font=dict(size=15, color="#2c2825"),
+            legend=dict(font=dict(size=11)),
+            margin=dict(t=50, b=20, l=20, r=20),
+        )
+        fig1.update_traces(
+            textfont_size=12,
+            marker=dict(line=dict(color="#ffffff", width=2)),
+        )
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
@@ -55,9 +68,18 @@ def render_analytics(df: pd.DataFrame, theme_mode: str = "Dark Mode"):
                 y="Threat Count",
                 title="Department Risk Exposure",
                 color="Threat Count",
-                color_continuous_scale="Reds",
+                color_continuous_scale=[[0, "#fef2f0"], [0.5, "#e06b5e"], [1, "#c4392a"]],
             )
-            fig2.update_layout(template=plotly_template, paper_bgcolor="rgba(0,0,0,0)")
+            fig2.update_layout(
+                template="plotly_white",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(family="Inter, sans-serif", color="#2c2825"),
+                title_font=dict(size=15, color="#2c2825"),
+                margin=dict(t=50, b=20, l=20, r=20),
+                coloraxis_showscale=False,
+            )
+            fig2.update_traces(marker_line_width=0, marker_cornerradius=6)
             st.plotly_chart(fig2, use_container_width=True)
         else:
             st.info("Department metadata not present in dataset.")
@@ -76,6 +98,22 @@ def render_analytics(df: pd.DataFrame, theme_mode: str = "Dark Mode"):
         markers=True,
         line_shape="spline",
     )
-    fig3.update_traces(line_color="#3b82f6")
-    fig3.update_layout(template=plotly_template, paper_bgcolor="rgba(0,0,0,0)", height=350)
+    fig3.update_traces(
+        line_color="#c4392a",
+        line_width=2.5,
+        marker=dict(size=5, color="#c4392a", line=dict(width=1.5, color="#ffffff")),
+        fill="tozeroy",
+        fillcolor="rgba(196, 57, 42, 0.06)",
+    )
+    fig3.update_layout(
+        template="plotly_white",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#2c2825"),
+        title_font=dict(size=15, color="#2c2825"),
+        height=350,
+        margin=dict(l=20, r=20, t=50, b=20),
+        xaxis=dict(gridcolor="#f0ede8"),
+        yaxis=dict(gridcolor="#f0ede8"),
+    )
     st.plotly_chart(fig3, use_container_width=True)

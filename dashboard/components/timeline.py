@@ -2,7 +2,7 @@
 SentinelAI Dashboard — User Behavior Timeline Component
 
 Displays interactive visual activity timeline scatter charts, full activity log tables,
-and step-by-step incident attack storylines.
+and step-by-step incident attack storylines with premium white theme.
 """
 
 import streamlit as st
@@ -31,7 +31,7 @@ def render_timeline(df: pd.DataFrame):
         color="label",
         size=[12 if l == "anomaly" else 7 for l in df_user["label"]],
         hover_data=[c for c in ["resource_accessed", "source_ip", "geo_location", "attack_type", "status"] if c in df_user.columns],
-        color_discrete_map={"normal": "#16a34a", "anomaly": "#dc2626"},
+        color_discrete_map={"normal": "#2e7d4f", "anomaly": "#c4392a"},
         title=f"Activity Chronology Timeline — {selected_entity}",
         labels={"timestamp": "Timestamp", "action_type": "Action", "label": "Security Status"},
     )
@@ -39,10 +39,15 @@ def render_timeline(df: pd.DataFrame):
         template="plotly_white",
         plot_bgcolor="rgba(0,0,0,0)",
         paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#2c2825"),
+        title_font=dict(size=15, color="#2c2825"),
         height=340,
         margin=dict(l=20, r=20, t=40, b=20),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        xaxis=dict(gridcolor="#f0ede8"),
+        yaxis=dict(gridcolor="#f0ede8"),
     )
+    fig_scatter.update_traces(marker=dict(line=dict(width=1, color="#ffffff")))
     st.plotly_chart(fig_scatter, use_container_width=True)
 
     st.markdown("---")

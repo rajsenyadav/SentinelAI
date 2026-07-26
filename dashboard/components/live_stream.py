@@ -3,6 +3,7 @@ SentinelAI Dashboard — Live Event Stream Component
 
 Continuously streams incoming enterprise access logs in real-time.
 Renders live status badges reflecting analyst triage decisions.
+Premium white-only theme integration.
 """
 
 import streamlit as st
@@ -23,15 +24,15 @@ def render_live_stream(df: pd.DataFrame):
         curr_status = str(row.get("status", "LIVE_THREAT"))
 
         if curr_status == "FALSE_POSITIVE":
-            status_html = "<span class='badge-low' style='background: #16a34a; color: #ffffff;'>FALSE POSITIVE (CLEARED)</span>"
+            status_html = "<span style='background:#f0faf3;color:#2e7d4f;border:1.5px solid rgba(46,125,79,0.25);padding:3px 10px;border-radius:50px;font-weight:700;font-size:0.75rem;'>FALSE POSITIVE</span>"
         elif curr_status == "RESOLVED":
-            status_html = "<span class='badge-low' style='background: #0284c7; color: #ffffff;'>RESOLVED</span>"
+            status_html = "<span style='background:#f0faf3;color:#2e7d4f;border:1.5px solid rgba(46,125,79,0.25);padding:3px 10px;border-radius:50px;font-weight:700;font-size:0.75rem;'>RESOLVED</span>"
         elif curr_status == "UNDER_INVESTIGATION":
-            status_html = "<span class='badge-high' style='background: #d97706; color: #ffffff;'>INVESTIGATING</span>"
+            status_html = "<span style='background:#fdf8ee;color:#b8860b;border:1.5px solid rgba(184,134,11,0.3);padding:3px 10px;border-radius:50px;font-weight:700;font-size:0.75rem;'>INVESTIGATING</span>"
         elif is_anomaly:
-            status_html = "<span class='badge-critical'>ANOMALY</span>"
+            status_html = "<span style='background:#fef2f0;color:#c4392a;border:1.5px solid rgba(196,57,42,0.3);padding:3px 10px;border-radius:50px;font-weight:700;font-size:0.75rem;'>ANOMALY</span>"
         else:
-            status_html = "<span class='badge-low'>NORMAL</span>"
+            status_html = "<span style='background:#f0faf3;color:#2e7d4f;border:1.5px solid rgba(46,125,79,0.25);padding:3px 10px;border-radius:50px;font-weight:700;font-size:0.75rem;'>NORMAL</span>"
         
         formatted_rows.append({
             "Status": status_html,

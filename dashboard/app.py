@@ -4,7 +4,7 @@ SentinelAI — Enterprise Security Operations Center (SOC) Dashboard
 Main Streamlit Application Entry Point.
 Incident-Centric UEBA & SOC Decision Support Platform.
 Persistent Analyst Feedback & Audit Logging Integration.
-Vanilla Light Mode Theme System.
+Premium White Theme System.
 """
 
 import os
@@ -33,10 +33,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# Load Custom CSS (Vanilla Light Mode)
+# Load Custom CSS (Premium White Theme)
 css_path = os.path.join(PROJECT_ROOT, "dashboard", "styles.css")
 if os.path.exists(css_path):
-    with open(css_path) as f:
+    with open(css_path, encoding="utf-8") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
@@ -47,23 +47,26 @@ def main():
 
     # Calculate active anomalies directly from persisted CSV dataset
     anomalies = df_proc[df_proc["label"] == "anomaly"]
+    total_events = len(df_proc)
     crit = len(anomalies[anomalies["attack_type"].isin(["lateral_movement", "low_slow_exfiltration"])]) if len(anomalies) > 0 else 0
     high = len(anomalies[anomalies["attack_type"].isin(["brute_force", "impossible_travel", "credential_stuffing"])]) if len(anomalies) > 0 else 0
 
     st.markdown(
         f"""
         <div class="soc-header-banner">
-            <div>
-                <h1>SentinelAI</h1>
-                <p>Enterprise Behavioral Anomaly Detection & Incident-Centric UEBA Platform</p>
-                <div style="margin-top: 6px;">
-                    <span class="developer-watermark">Mark 1 Architect & Developer: <b>Raj Sen</b></span>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h1>SentinelAI</h1>
+                    <p>Enterprise Behavioral Anomaly Detection & Incident-Centric UEBA Platform</p>
+                    <div style="margin-top: 8px;">
+                        <span class="developer-watermark">Mark 1 Architect & Developer: <b>Raj Sen</b></span>
+                    </div>
                 </div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
-                <span class="badge-critical">Critical: {crit}</span>
-                <span class="badge-high">High: {high}</span>
-                <span class="badge-low">System: Operational</span>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span class="badge-critical">Critical: {crit}</span>
+                    <span class="badge-high">High: {high}</span>
+                    <span class="badge-low">System: Operational</span>
+                </div>
             </div>
         </div>
         """,
@@ -104,7 +107,7 @@ def main():
     st.markdown(
         """
         <div class="footer-credit">
-            <b>Raj Sen | MARK 1</b>
+            <b>RAJ SEN</b> &nbsp;&middot;&nbsp; MARK 1 SYSTEMS ARCHITECT
         </div>
         """,
         unsafe_allow_html=True,
