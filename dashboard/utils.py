@@ -39,8 +39,8 @@ def load_dataset() -> Tuple[pd.DataFrame, pd.DataFrame]:
         df_proc.to_csv(proc_path, index=False)
         return df_proc, df_proc
 
-    df_raw = pd.read_csv(raw_path) if os.path.exists(raw_path) else pd.DataFrame()
-    df_proc = pd.read_csv(proc_path)
+    df_raw = pd.read_csv(raw_path, low_memory=False) if os.path.exists(raw_path) else pd.DataFrame()
+    df_proc = pd.read_csv(proc_path, low_memory=False)
     df_proc = ensure_persistence_schema(df_proc)
 
     return df_raw, df_proc
