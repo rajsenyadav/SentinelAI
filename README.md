@@ -52,6 +52,10 @@ Modern enterprise Security Operations Centers (SOCs) are overwhelmed by **alert 
 | :---: | :---: |
 | <img src="image.png" width="100%" alt="Streamlit SOC Analytics Dashboard"> | <img src="image1.png" width="100%" alt="Real-Time AI Decision & Safety Log"> |
 
+| 👤 Behavioral Identity & Anomaly Profile | 📖 Chronological Attack Storyline Engine |
+| :---: | :---: |
+| <img src="image2.png" width="100%" alt="Behavioral Identity Profile"> | <img src="image3.png" width="100%" alt="Chronological Attack Storyline"> |
+
 </div>
 
 ---
